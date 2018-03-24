@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using mantis_test.Mantis;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace mantis_test
 {
@@ -12,7 +6,7 @@ namespace mantis_test
     public class ProjectCreatingTests : TestBase
     {
         [Test]
-        [Repeat(25)]
+        //[Repeat(25)]
         public void VerifyProjectCreation()
         {
             var newProject = GenerateProjectDataModel();
