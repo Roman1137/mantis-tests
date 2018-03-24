@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using mantis_test.Mantis;
 using NUnit.Framework;
 
 namespace mantis_test
@@ -32,10 +33,17 @@ namespace mantis_test
             return result.ToString();
         }
 
-        public static bool InheritGlobalTerritoty()
+        public ProjectData GenerateProjectDataModel()
         {
-            var a = rnd.Next(1, 2);
-            return (a == 1);
+            var newProjectModel = new ProjectData()
+            {
+                name = GenerateRandomString(10),
+                description = GenerateRandomString(15),
+                view_state = new ProjectModel().GetViewState(),
+                status = new ProjectModel().GetStatus(),
+            };
+
+            return newProjectModel;
         }
     }
 }

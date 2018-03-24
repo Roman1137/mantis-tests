@@ -56,6 +56,8 @@ namespace mantis_test
 
         public void GoToEditProjectPage(int indexOfGroupToRemove)
         {
+            Driver.Navigate().Refresh();
+            WaitUntiTextIsPresentInElement("[type='submit']", "создать новый проект");
             Driver.FindElements(By.CssSelector("tbody"))
                 .First().FindElements(By.CssSelector("tr"))[indexOfGroupToRemove]
                 .FindElement(By.CssSelector("a[href]")).Click();

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using mantis_test.Mantis;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace mantis_test
 {
@@ -12,23 +14,22 @@ namespace mantis_test
         [TestFixture]
         public class ProjectCreatingTests : TestBase
         {
-            ProjectModel newProject = new ProjectModel
-                (GenerateRandomString(10), GenerateRandomString(10), rnd.Next(0, 3), InheritGlobalTerritoty(), rnd.Next(0, 1));
-
             [Test]
             [Repeat(25)]
             public void VerifyProjectRemoval()
             {
-                const int indexOfGroupToRemove = 5;
-                App.Menu.GoToProjectsPage();
-                var projectsBefore = App.Project.VerifyProjectExists(newProject, indexOfGroupToRemove);
+                var newProject = GenerateProjectDataModel();
 
-                App.Menu.GoToEditProjectPage(indexOfGroupToRemove);
+                const int indexOfProjectToRemove = 10;
+                App.Menu.GoToProjectsPage();
+                var projectsBefore = App.API.VerifyProjectExists(newProject, indexOfProjectToRemove);
+
+                App.Menu.GoToEditProjectPage(indexOfProjectToRemove);
                 App.Project.RemoveProject();
 
-                var projectsAfter = App.Project.GetProjectsList();
+                var projectsAfter = App.API.GetProjectsList();
 
-                projectsBefore.RemoveAt(indexOfGroupToRemove);
+                projectsBefore.RemoveAt(indexOfProjectToRemove);
                 projectsAfter.Sort();
                 projectsBefore.Sort();
                 Assert.AreEqual(projectsBefore, projectsAfter);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using mantis_test.Mantis;
 using NUnit.Framework;
 
 namespace mantis_test
@@ -14,22 +15,19 @@ namespace mantis_test
         [Repeat(25)]
         public void VerifyProjectCreation()
         {
-            var newProject = new ProjectModel
-                (GenerateRandomString(10), GenerateRandomString(10), rnd.Next(0, 3), InheritGlobalTerritoty(), rnd.Next(0, 1));
+            var newProject = GenerateProjectDataModel();
 
             App.Menu.GoToProjectsPage();
-            var projectsBefore = App.Project.GetProjectsList();
+            var projectsBefore = App.API.GetProjectsList();
 
-            App.Menu.GoToCreateProjectPage();
-            App.Project.CreateProject(newProject);
+            App.API.CreateProject(newProject);
 
-            var projectsAfter = App.Project.GetProjectsList();
+            var projectsAfter = App.API.GetProjectsList();
 
-            projectsBefore.Add(newProject.AllInfo);
+            projectsBefore.Add(newProject);
             projectsAfter.Sort();
             projectsBefore.Sort();
             Assert.AreEqual(projectsBefore, projectsAfter);
-
         }
     }
 }

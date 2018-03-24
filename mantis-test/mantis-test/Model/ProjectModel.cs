@@ -4,19 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using mantis_test.Mantis;
 
 namespace mantis_test
 {
     public class ProjectModel 
     {
-        public ProjectModel(string name, string description, int indexOfState=0,bool inheritTheGlobalCategory=false, int indexOfVisionOption=0)
+        public ProjectModel() { }
+        public ProjectModel(string name, string description, int indexOfState = 0, bool inheritTheGlobalCategory = false, int indexOfVisionOption = 0)
         {
             this.Name = name;
             this.State = listOfState[indexOfState];
             this.InheritTheGlobalCategory = inheritTheGlobalCategory;
             this.Vision = listOfVisionOptions[indexOfVisionOption];
             this.Description = description;
-            
+
         }
         public string Name { get; set; }
         public string State { get; set; }
@@ -30,7 +32,7 @@ namespace mantis_test
         };
         public bool InheritTheGlobalCategory { get; set; }
         public string Vision { get; set; }
-        readonly List<string > listOfVisionOptions = new List<string>()
+        readonly List<string> listOfVisionOptions = new List<string>()
         {
             "публичная",
             "приватная"
@@ -52,6 +54,26 @@ namespace mantis_test
                 }
             }
             set => allInfo = (value);
+        }
+        public ObjectRef GetViewState()
+        {
+            var listOfViewStates = new List<string>()
+            {
+                "public",
+                "private"
+            };
+            return new ObjectRef{ name = listOfViewStates[new Random().Next(0, 1)]};
+        }
+        public ObjectRef GetStatus()
+        {
+            var listOfStatuses= new List<string>()
+            {
+                "development",
+                "release",
+                "stable",
+                "obsolete"
+            };
+            return new ObjectRef { name = listOfStatuses[new Random().Next(0, 3)] };
         }
     }
 }
